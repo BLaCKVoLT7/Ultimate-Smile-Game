@@ -1,0 +1,326 @@
+<html lang="en-gb"><head>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="GENERATOR" content="A plain text editor">
+    <meta name="Author" content="Marc Conrad">
+    <meta name="Description" content="Smile Game Demo">
+
+    <title>Dr Marc Conrad - Publications</title>
+    <style>
+        h1 {
+            color: blue;
+        }
+
+        p {
+          text-align: center;
+          font-size: 40px;
+          margin-top: 0px;
+        }
+        h5 {
+          text-align: center;
+          font-size: 20px;
+          margin-top: 0px;
+        }
+        h4 {
+          text-align: center;
+          font-size: 20px;
+          margin-top: 0px;
+          float: center;
+          color: rgb(221, 14, 14);
+        }
+        .button {
+          background: #016ABC;
+          color: #fff;
+          border: 3px solid #eee;
+          border-radius: 20px;
+          box-shadow: 5px 5px 5px #eee;
+          text-shadow: none;
+        }
+
+        /* CSS from https://getcssscan.com/css-buttons-examples */
+        .button-62 {
+            background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+            border: 0;
+            border-radius: 12px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 2.5;
+            outline: transparent;
+            padding: 0 1rem;
+            text-align: center;
+            text-decoration: none;
+            transition: box-shadow .2s ease-in-out;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+        }
+
+        .h2-62 {
+            line-height: 2.5;
+        }
+
+
+        .button-62:not([disabled]):focus {
+            box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+        }
+
+        .button-62:not([disabled]):hover {
+            box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+        }
+
+        .button {
+          background-color: #00bfff; /* Green */
+          border: none;
+          color: white;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 12px;
+          cursor: pointer;
+
+        }
+
+        .button:hover {
+          background-color: #090b92;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .center {
+          margin: auto;
+          width: 60%;
+          border: 3px solid #73AD21;
+          padding: 10px;
+        }
+
+        .cen{
+          margin: auto;
+        width: 150%;
+        }
+
+        .columns {
+          float: left;
+          width: 33.3%;
+          padding: 8px;
+        }
+
+        .price {
+          list-style-type: none;
+          border: 1px solid #eee;
+          margin: 0;
+          padding: 0;
+          -webkit-transition: 0.3s;
+          transition: 0.3s;
+        }
+
+        .price:hover {
+          box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+        }
+
+        .price .header {
+          background-color: rgb(3, 3, 3);
+          color: white;
+          font-size: 25px;
+        }
+
+        .price li {
+          border-bottom: 1px solid #eee;
+          padding: 20px;
+          text-align: center;
+        }
+
+        .price .grey {
+          background-color: #eee;
+          font-size: 20px;
+        }
+
+        .button {
+          background-color: #000000;
+          border: none;
+          color: white;
+          padding: 10px 25px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 18px;
+        }
+
+        @media only screen and (max-width: 600px) {
+          .columns {
+            width: 100%;
+          }
+        }
+
+    </style>
+
+
+  <script>
+	  var TIME_PER_QUESTION = 10
+	  var NUM_ROUNDS = 6
+	  
+      var quest = "";
+      var solution = -1;
+      var score = 0;
+      let round ;
+      var playerRoundNum = 0
+      var p1score = 0
+      var p2score = 0
+      var victor = -1
+	  var timeleft = TIME_PER_QUESTION
+	  
+	  //console.log('hello')
+	  
+	  function getCurrentPlayer(){
+		return ((playerRoundNum % 2) + 1)
+		//	if(playerRoundNum % 2){
+		//		return 1
+		//	}else{
+		//		return 2
+		//	}
+	  }
+	  
+	  function getCurrentRound(){
+		return Math.floor(playerRoundNum / 2) + 1
+	  }
+
+      let newgame = function(x) {
+          clearInterval(downloadTimer);
+          startup();
+          score+=1;
+          round+=1;
+          //document.getElementById("score").innerHTML = score;
+		 // document.getElementById("input").disabled = false;
+		  //document.getElementById("input").value = '';
+      }
+	  
+      let handleInput = function(x) {
+
+          let inp = document.getElementById("input");
+          var note = document.getElementById("note");
+          if (inp.value == solution) {
+		  if(getCurrentPlayer() == 1){
+              p2score = p2score + timeleft
+              }else{
+              p1score = p1score + timeleft
+              }
+              note.innerHTML = 'Correct! - <button type="submit" class="button" id="submit" onClick="newgame()" > Next Round </button>';
+			 // document.getElementById("input").disabled = true;
+			  clearInterval(downloadTimer);
+          } else {
+              note.innerHTML = "Not Correct!";
+          }
+          
+      }
+
+      let handleKeyInput = function(x) {
+		console.log("key pressed" + x)
+	  }
+
+      let startQuest = function(data) {
+          var parsed = JSON.parse(data);
+          quest = parsed.question;
+          solution = parsed.solution;
+          let img = document.getElementById("quest");
+          img.src = quest;
+          let note = document.getElementById("note");
+          note.innerHTML = "Question is ready.";
+          
+          
+      }
+
+      let fetchText = async function() {
+          let response = await fetch('https://marcconrad.com/uob/smile/api.php');
+          let data = await response.text();
+          startQuest(data);
+		  document.getElementById("playerRound").innerHTML = "Round : " + getCurrentRound() + "</br>Player : " + getCurrentPlayer() + "</br>Player 1 score : " +p1score + "</br>Player 2 score : " +p2score;
+		  playerRoundNum = playerRoundNum + 1
+      }
+
+      let startup = function() {
+          fetchText();
+          timerStarter();
+      }
+  
+      let timerStarter = function () {
+      timeleft = TIME_PER_QUESTION;
+      downloadTimer = setInterval(function(){
+      if(timeleft <= 0){
+          clearInterval(downloadTimer);
+          document.getElementById("countdown").innerHTML = "Round Ended";
+		  if(getCurrentRound() < NUM_ROUNDS){
+			startup();
+		  }else{
+			document.getElementById("countdown").innerHTML = "Game Ended!!!";
+			if(p1score < p2score){
+				// p2 wins
+				victor = 2
+				document.getElementById("countdown").innerHTML =  "</br>ULTIMATE FINAL VICTOR: Player 2 !!!";
+			}else if (p1score > p2score){
+				// p1 wins
+				victor = 1
+				document.getElementById("countdown").innerHTML =  "</br>ULTIMATE FINAL VICTOR: Player 1 !!!";
+			}else {
+				// DRAW
+				victor = 0
+				document.getElementById("countdown").innerHTML =  "</br>Draw!!!";
+			}
+		  }
+      } else {
+          document.getElementById("countdown").innerHTML = timeleft + " ";
+      }
+      timeleft -= 1;
+      }, 1000);
+
+      }
+  </script>
+
+
+</head>
+
+<body >
+
+    <div class="row begin-countdown">
+        <div class="col-md-12 text-center">
+            
+
+
+    <script>
+        startup();
+    </script>
+    <h1>The Ultimate Smile Game</h1> <h4><div id="playerRound"></div>Seconds left in the Round <span id="countdown"></span></h4>
+
+    
+        
+      
+
+    <img id="quest" src="https://www.sanfoh.com/uob/smile/data/se0c278968599908a91e717dff6n445.png">
+    <div>
+        
+        <h2 class="h2-62" id="note">Quest is ready.</h2>
+       
+        <h2>Enter the missing digit: <input class="button-62" id="input" onchange="handleInput()" oninput="handleKeyInput()" type="number" step="1" min="0" max="9"></h2>
+
+    <p>
+        </p><hr>
+        <small>
+            © by <a href="https://marcconrad.com/marc-conrad/index.php?n=12&amp;s=mc">Marc Conrad</a> 2022.
+            The material on this page is presented "as is". There is no warranty implied. This application may be discontinued without notice
+            and must not be used for commercial applications. There is also an <a href="doc.php">API</a> available.
+            Use <a href="https://sanfoh.com/six/sym.php?smile=1" target="_new">this link</a><a> to download up to 1000 games.
+         For any comments or suggestions
+            </a><a href="http://marcconrad.com/consultancy/">contact Marc Conrad</a>. <em>Last update:</em> June 2022.
+        </small>
+    <p></p>
+
+<h3>Modified by: H.M.A.N Girakaduwa | 2211285 </h3>
+
+</body></html>
